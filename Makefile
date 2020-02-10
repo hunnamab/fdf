@@ -1,10 +1,11 @@
 NAME = fdf
 FLAGS = -Wall -Wextra -L. -lmlx -framework OpenGL -framework AppKit
-#-lmlx -lX11 -lXext for linux
+#-lmlx -lX11 -lXext -lm for linux
 #-lmlx -framework OpenGL -framework AppKit for mac
 LIBRARY = libft/libft.a
 HEADER = fdf.h
-SRC = fdf.c map_read.c coordinates.c get_next_line.c control.c
+SRC = fdf.c coordinates.c get_next_line.c key_mouse_control.c map_changes.c map_read.c \
+		map_settings.c matrix_manipulations.c points_output.c projections.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
