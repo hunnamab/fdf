@@ -17,8 +17,8 @@ p_point change_scale(p_point point, char sign, double dx, double dy)
 
 p_point change_alt(p_point point, int sign)
 {
-    if (point.flatness != 0)
-        point.y += sign;
+    //if (point.flatness != 0)
+        //point.y += sign;
     return (point);
 }
 

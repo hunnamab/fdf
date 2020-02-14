@@ -11,7 +11,6 @@
 #include <mlx.h>
 
 # define MAX(x,y) x > y ? x : y;
-
 # define WID 1024
 # define HEI 768
 
@@ -30,7 +29,7 @@ typedef struct      point
     double          x;
     double          y;
     double          z;
-    uint_fast64_t   flatness;
+	double		z_cpy;
 }                   p_point;
 
 /*typedef struct matrix_typ

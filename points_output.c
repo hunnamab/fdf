@@ -1,22 +1,26 @@
 #include "fdf.h"
 
-int32_t get_color(int32_t start_color, int32_t y)
+double percent(int start, int curr_pos, int distance)
 {
-	int32_t i = start_color;
-	int32_t red = 0;
-	int32_t green = 0;
-	int32_t blue = 0;
+	double placement = curr_pos - start;
+	return ((distance == 0) ? 1.0 : (placement/distance));
+}
+int get_light(int start_color, int end_color, double percentage)
+{
+	return ((int)((1 - percentage) * start_color + percentage * end_color));
+}
+int get_color(int start, int curr_pos, int distance, int start_color, int end_color)
+{
+	int red = 0;
+	int green = 0;
+	int blue = 0;
+	double percentage;
 	
-	red = i & 255;
-	red += y;
-	green = (i >> 8) & 255;
-	green += y;
-	blue = (i >> 16) & 255;
-	blue += y;
-	red > 255 ? red = 255 : 0;
-	green > 255 ? green = 255 : 0;
-	blue > 255 ? blue = 255 : 0;
-	return(red | green << 8 | blue << 16);
+	percentage = percent(start, curr_pos, distance);
+	red = (get_light((start_color >> 16) & 255, (end_color >> 16) & 255, percentage));
+	green = (get_light((start_color >> 8) & 255, (end_color >> 8) & 255, percentage));
+	blue = get_light(start_color & 255, end_color & 255, percentage);
+	return((red << 16) | (green << 8) | blue);
 }
 
 void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
@@ -28,9 +32,6 @@ void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
 	int lengthY = abs((int)point_s.y - (int)point_f.y);
 	int length;
 	length = MAX(lengthX, lengthY);
-	int grad = point_s.z > point_f.z ? 0 : point_f.z + length;
-	int grad_s = point_s.z > point_f.z ? point_s.z + length : 0;
-	(point_s.z == point_f.z) > 0 ? grad = point_f.z + length : 0;
 	if (length == 0)
 		cntrl->data_ptr[(int)point_f.y * WID + (int)point_f.x] = cntrl->color;
 	if (lengthY <= lengthX)
@@ -43,7 +44,10 @@ void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
 		while (length--)
 		{
 			if (y >= 0 && y < HEI && x >= 0 && x < WID)
-				cntrl->data_ptr[y * WID + x] = get_color(cntrl->color, grad);
+				cntrl->data_ptr[y * WID + x] = point_s.z_cpy - point_f.z_cpy != 0 ? \
+				get_color(point_f.x, x, ((int)point_s.x - (int)point_f.x), point_s.z_cpy > point_f.z_cpy ? \
+				cntrl->color : 0xD54418, (point_s.z_cpy > point_f.z_cpy ? 0xD54418 : cntrl->color)) : point_s.z_cpy > 0 ? \
+				0xD54418 : cntrl->color;
 			x += dx;
 			d += 2 * lengthY;
 			if (d > 0)
@@ -51,7 +55,6 @@ void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
 				d -= 2 * lengthX;
 				y += dy;
 			}
-			grad_s > grad ? grad++ : grad--;
 		}	
 	}
 	else
@@ -63,7 +66,11 @@ void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
 		while (length--)
 		{
 			if (y >= 0 && y < HEI && x >= 0 && x < WID)
-				cntrl->data_ptr[y * WID + x] = get_color(cntrl->color, grad);
+				cntrl->data_ptr[y * WID + x] = point_s.z_cpy - point_f.z_cpy != 0 ? \
+				get_color(point_f.y, y, \
+				((int)point_s.y - (int)point_f.y), point_s.z_cpy > point_f.z_cpy ? \
+				cntrl->color : 0xD54418, (point_s.z_cpy > point_f.z_cpy ? 0xD54418 : cntrl->color)) \
+				: point_s.z_cpy > 0 ? 0xD54418 : cntrl->color;
 			y += dy;
 			d += 2 * lengthX;
 			if (d > 0)
@@ -71,7 +78,6 @@ void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
 				d -= 2 * lengthY;
 				x += dx;
 			}
-			grad_s > grad ? grad++ : grad--;
 		}
 	}
 }
@@ -104,10 +110,7 @@ void	points_output(p_point *points, c_cntrl *cntrl)
 	}
 	while (i < a - 1)
 	{
-		if (!points[i].flatness && !points[i].flatness)
-		{
 			get_line_colored(cntrl, points[i], points[i + 1]);
 			i++;
-		}
 	}
 }
