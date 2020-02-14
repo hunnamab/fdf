@@ -11,6 +11,7 @@
 #include <mlx.h>
 
 # define MAX(x,y) x > y ? x : y;
+
 # define WID 1024
 # define HEI 768
 
