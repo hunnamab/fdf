@@ -38,6 +38,7 @@ void make_3d(c_cntrl *cntrl)
 		{
 			cntrl->points[i].x = (d * cntrl->scale);
             cntrl->points[i].y = (j * cntrl->scale);
+			cntrl->points[i].z = ft_atoi(cntrl->arr[i]);
             // !! projections.c contains iso_coor function
 			cntrl->points[i] = iso_coor(cntrl->points[i], cntrl->angle, cntrl->x_pos, cntrl->y_pos);
 			i++;

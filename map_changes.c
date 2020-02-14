@@ -27,13 +27,9 @@ void scale(c_cntrl *cntrl, int key)
     while (i < cntrl->nmb_op)
     {
         if (key == 24) // 0x0039 9
-        {
             cntrl->points[i] = change_scale(cntrl->points[i], '+', cntrl->dx, cntrl->dy);
-        }
         if (key == 27) // 0x0038 8
-        {
             cntrl->points[i] = change_scale(cntrl->points[i], '-', cntrl->dx, cntrl->dy);
-        }
         i++;
     }
 }

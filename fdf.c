@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	cntrl = (c_cntrl *)ft_memalloc(sizeof(c_cntrl));
 	if (argc != 2)
 	{
-		ft_putstr("Usage: ./fdf [file_name.fdf]\n");
+		ft_putstr("Usage: ./fdf <file_name.fdf>\n");
 		exit(EXIT_SUCCESS);
 	}
 	fd = open(argv[1], O_RDONLY);
@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	find_center(cntrl); //get central points of a map to rotate it
 	points_output(cntrl->points, cntrl); //connect points to get a map
 	mlx_put_image_to_window(cntrl->mlx_ptr, cntrl->win_ptr, cntrl->img_ptr, 0, 0);
+	show_menu(cntrl);
 	key_mouse_control(cntrl);
 	mlx_loop(cntrl->mlx_ptr);
 	return (0);

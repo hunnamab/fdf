@@ -2,22 +2,22 @@
 
 p_point *get_point_arr(char **arr, c_cntrl *cntrl)
 {
-    int i = 0;
+    /*int i = 0;
     int j = 0;
     int a = 0;
     int q = cntrl->nmb_op / cntrl->nmb_or;
-    int d = 0;
+    int d = 0;*/
     p_point *point_arr;
 
     point_arr = (p_point *)malloc(sizeof(p_point) * cntrl->nmb_op);
-    while (j < cntrl->nmb_or)
+    cntrl->arr = arr;
+    /*while (j < cntrl->nmb_or)
     {
         while(i < q)
         {
             point_arr[i].z = ft_atoi(arr[a]);
+            //point_arr[i].flatness = ft_atoi(arr[a]);
             point_arr[i].flatness = (point_arr[i].z != 0 ? 1 : 0);
-            //point_arr[i].x = (d * 20);
-            //point_arr[i].y = (j * 20);
             a++;
             d++;
             i++;
@@ -25,7 +25,7 @@ p_point *get_point_arr(char **arr, c_cntrl *cntrl)
         d = 0;
         q = q + (cntrl->nmb_op / cntrl->nmb_or);
         j++;
-    }
+    }*/
     return(point_arr);
 }
 

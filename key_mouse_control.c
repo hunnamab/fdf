@@ -9,7 +9,7 @@ int key_control(int key, c_cntrl *cntrl)
     }
     if (key == 18 || key == 19 || key == 20 || \
         key == 123 || key == 126 || key == 124 || key == 125 || \
-        key == 0 || key == 2 || \
+        key == 0 || key == 2 || key == 6 || key == 7 || \
         key == 13 || key == 1 || key == 24 || key == 27 || \
         key == 34 || key == 38 || key == 40 || key == 37)
     {
@@ -31,8 +31,19 @@ int key_control(int key, c_cntrl *cntrl)
             scale(cntrl, key);
         if (key == 34 || key == 38 || key == 40 || key == 37)
             move(cntrl, key);
+        if (key == 6) // z
+		{
+			parallel_coor(cntrl);
+			find_center(cntrl);
+		}
+		if (key == 7) // x
+		{
+			make_3d(cntrl);
+			find_center(cntrl);
+		}
         points_output(cntrl->points, cntrl);
         mlx_put_image_to_window(cntrl->mlx_ptr, cntrl->win_ptr, cntrl->img_ptr, 0, 0);
+        show_menu(cntrl);
     }
     return (0);
 }
