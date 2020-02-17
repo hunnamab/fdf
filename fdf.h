@@ -20,37 +20,20 @@
 # define MINT 0x30A497
 # define IVORY 0xE4E4E1
 
-/*# define X_COMP 0
-# define Y_COMP 1
-# define Z_COMP 2
-# define N_COMP 3*/
-
 typedef struct      point
 {
     double          x;
     double          y;
     double          z;
-	double		z_cpy;
+	double			z_cpy;
 }                   p_point;
-
-/*typedef struct matrix_typ
-{
-    double elem[4][4];
-} matrix, *matrix_ptr;
-
-typedef struct  mat_point
-{
-    double cor[4];
-    matrix scale;
-    matrix rotation;
-} m_point, *m_point_ptr;*/
 
 typedef struct  cntrl
 {
-	void        *mlx_ptr;
-	void        *win_ptr;
-	void        *img_ptr; //pointer to an image
-	int         *data_ptr; //pointer to data address (mlx_get_data_addr)
+	void        *mlx;
+	void        *win;
+	void        *img;
+	int         *data;
 	int         bpp;
 	int         size_line;
 	int         endian;
@@ -61,9 +44,6 @@ typedef struct  cntrl
 	int         nmb_or;
 	int         iso;
 	double      angle;
-	double      alpha;
-	double      beta;
-	double      gamma;
 	double      dx;
 	double      dy;
 	double      x_pos;

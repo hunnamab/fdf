@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/17 14:40:58 by hunnamab          #+#    #+#             */
+/*   Updated: 2020/02/17 14:48:40 by hunnamab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	main(int argc, char **argv)
@@ -18,9 +30,9 @@ int	main(int argc, char **argv)
 	make_3d(cntrl);
 	find_center(cntrl);
 	points_output(cntrl->points, cntrl);
-	mlx_put_image_to_window(cntrl->mlx_ptr, cntrl->win_ptr, cntrl->img_ptr, 0, 0);
+	mlx_put_image_to_window(cntrl->mlx, cntrl->win, cntrl->img, 0, 0);
 	show_menu(cntrl);
 	key_mouse_control(cntrl);
-	mlx_loop(cntrl->mlx_ptr);
+	mlx_loop(cntrl->mlx);
 	return (0);
 }

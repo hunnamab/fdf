@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_changes.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/17 14:41:56 by hunnamab          #+#    #+#             */
+/*   Updated: 2020/02/17 14:46:58 by hunnamab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	move(c_cntrl *cntrl, int key)
@@ -35,21 +47,6 @@ void	scale(c_cntrl *cntrl, int key)
 	}
 }
 
-void	altitude(c_cntrl *cntrl, int key)
-{
-	int i;
-
-	i = 0;
-	while (i < cntrl->nmb_op)
-	{
-		if (key == 13)
-			cntrl->points[i] = change_alt(cntrl->points[i], -1);
-		if (key == 1)
-			cntrl->points[i] = change_alt(cntrl->points[i], 1);
-		i++;
-	}
-}
-
 void	rotation(c_cntrl *cntrl, int key)
 {
 	int i;
@@ -58,35 +55,17 @@ void	rotation(c_cntrl *cntrl, int key)
 	while (i < cntrl->nmb_op)
 	{
 		if (key == 123)
-		{
-			cntrl->beta = -0.05;
-			cntrl->points[i] = rotate_y(cntrl->points[i], cntrl->beta, cntrl->dx);
-		}
+			cntrl->points[i] = rotate_y(cntrl->points[i], -0.05, cntrl->dx);
 		if (key == 126)
-		{
-			cntrl->alpha = 0.05;
-			cntrl->points[i] = rotate_x(cntrl->points[i], cntrl->alpha, cntrl->dy);
-		}
+			cntrl->points[i] = rotate_x(cntrl->points[i], 0.05, cntrl->dy);
 		if (key == 124)
-		{
-			cntrl->beta = 0.05;
-			cntrl->points[i] = rotate_y(cntrl->points[i], cntrl->beta, cntrl->dx); 
-		}
+			cntrl->points[i] = rotate_y(cntrl->points[i], 0.05, cntrl->dx); 
 		if (key == 125)
-		{
-			cntrl->alpha = -0.05;
-			cntrl->points[i] = rotate_x(cntrl->points[i], cntrl->alpha, cntrl->dy);
-		}
+			cntrl->points[i] = rotate_x(cntrl->points[i], -0.05, cntrl->dy);
 		if (key == 0)
-		{
-			cntrl->gamma = -0.05;
-			cntrl->points[i] = rotate_z(cntrl->points[i], cntrl->gamma, cntrl->dx, cntrl->dy);
-		}
+			cntrl->points[i] = rotate_z(cntrl->points[i], -0.05, cntrl->dx, cntrl->dy);
 		if (key == 2)
-		{
-			cntrl->gamma = 0.05;
-			cntrl->points[i] = rotate_z(cntrl->points[i], cntrl->gamma, cntrl->dx, cntrl->dy);
-		}
+			cntrl->points[i] = rotate_z(cntrl->points[i], 0.05, cntrl->dx, cntrl->dy);
 		i++;
 	}
 }

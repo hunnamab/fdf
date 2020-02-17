@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_settings.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/17 14:42:08 by hunnamab          #+#    #+#             */
+/*   Updated: 2020/02/17 14:52:37 by hunnamab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	find_center(c_cntrl *cntrl)
@@ -51,17 +63,14 @@ void	make_3d(c_cntrl *cntrl)
 
 void	default_settings(c_cntrl *cntrl)
 {
-	cntrl->mlx_ptr = mlx_init();
-	cntrl->win_ptr = mlx_new_window(cntrl->mlx_ptr, WID, HEI, "fdfffs");
-	cntrl->img_ptr = mlx_new_image(cntrl->mlx_ptr, WID, HEI);
-	cntrl->data_ptr = (int *)mlx_get_data_addr(cntrl->img_ptr, &cntrl->bpp, &cntrl->size_line, &cntrl->endian);
+	cntrl->mlx = mlx_init();
+	cntrl->win = mlx_new_window(cntrl->mlx, WID, HEI, "fdfffs");
+	cntrl->img = mlx_new_image(cntrl->mlx, WID, HEI);
+	cntrl->data = (int *)mlx_get_data_addr(cntrl->img, &cntrl->bpp, &cntrl->size_line, &cntrl->endian);
 	cntrl->color = MINT;
 	cntrl->angle = 0.523599;
 	cntrl->scale = 20;
 	cntrl->iso = 1;
-	cntrl->alpha = 0;
-	cntrl->beta = 0;
-	cntrl->gamma = 0;
 	cntrl->x_pos = WID / 3;
 	cntrl->y_pos = HEI / 3;
 }
