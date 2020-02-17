@@ -6,7 +6,7 @@
 /*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:40:58 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 14:48:40 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:46:49 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(int argc, char **argv)
 	int		fd;
 	c_cntrl	*cntrl;
 
-	cntrl = (c_cntrl *)ft_memalloc(sizeof(c_cntrl));
+	if (!(cntrl = (c_cntrl *)ft_memalloc(sizeof(c_cntrl))))
+		return (0);
 	if (argc != 2)
 	{
 		ft_putstr("Usage: ./fdf <file_name.fdf>\n");

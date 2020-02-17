@@ -6,31 +6,29 @@
 /*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:02 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 14:42:04 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:29:32 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-p_point	*get_point_arr(char **arr, c_cntrl *cntrl)
+p_point	*get_point_arr(c_cntrl *cntrl)
 {
 	p_point *point_arr;
 
 	point_arr = (p_point *)malloc(sizeof(p_point) * cntrl->nmb_op);
-	cntrl->arr = arr;
 	return (point_arr);
 }
 
 p_point	*get_double_arr(c_cntrl *cntrl, char *buf)
 {
-	char	**arr;
 	char	*buf2;
 	int		i;
 	int		x;
 
 	i = 0;
 	x = 0;
-	arr = (char **)malloc(sizeof(char *) * cntrl->nmb_or + 1);
+	cntrl->arr = (char **)malloc(sizeof(char *) * cntrl->nmb_or + 1);
 	while (buf[i])
 	{
 		if (buf[i] == ' ' && buf[i + 1] == ' ')
@@ -55,8 +53,8 @@ p_point	*get_double_arr(c_cntrl *cntrl, char *buf)
 		buf2[i] == '\n' ? buf2[i] = ' ' : 0;
 		i++;
 	}
-	arr = ft_strsplit(buf2, ' ');
-	return (get_point_arr(arr, cntrl));
+	cntrl->arr = ft_strsplit(buf2, ' ');
+	return (get_point_arr(cntrl));
 }
 
 p_point	*point_arr(int fd, c_cntrl *cntrl)
@@ -72,7 +70,8 @@ p_point	*point_arr(int fd, c_cntrl *cntrl)
 	i = 0;
 	while (buf[i])
 	{
-		if (buf[i] != '\n' && buf[i] != ' ' && (buf[i + 1] == ' ' || buf[i + 1] == '\n'))
+		if (buf[i] != '\n' && buf[i] != ' ' && (buf[i + 1] == ' ' || \
+			buf[i + 1] == '\n'))
 			cntrl->nmb_op++;
 		if (buf[i] == '\n')
 			cntrl->nmb_or++;

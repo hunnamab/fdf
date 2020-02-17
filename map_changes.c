@@ -6,7 +6,7 @@
 /*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:41:56 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 14:46:58 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:32:55 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ void	scale(c_cntrl *cntrl, int key)
 	while (i < cntrl->nmb_op)
 	{
 		if (key == 24)
-			cntrl->points[i] = change_scale(cntrl->points[i], '+', cntrl->dx, cntrl->dy);
+			cntrl->points[i] = change_scale(cntrl->points[i], '+', \
+				cntrl->dx, cntrl->dy);
 		if (key == 27)
-			cntrl->points[i] = change_scale(cntrl->points[i], '-', cntrl->dx, cntrl->dy);
+			cntrl->points[i] = change_scale(cntrl->points[i], '-', \
+				cntrl->dx, cntrl->dy);
 		i++;
 	}
 }
@@ -59,13 +61,15 @@ void	rotation(c_cntrl *cntrl, int key)
 		if (key == 126)
 			cntrl->points[i] = rotate_x(cntrl->points[i], 0.05, cntrl->dy);
 		if (key == 124)
-			cntrl->points[i] = rotate_y(cntrl->points[i], 0.05, cntrl->dx); 
+			cntrl->points[i] = rotate_y(cntrl->points[i], 0.05, cntrl->dx);
 		if (key == 125)
 			cntrl->points[i] = rotate_x(cntrl->points[i], -0.05, cntrl->dy);
 		if (key == 0)
-			cntrl->points[i] = rotate_z(cntrl->points[i], -0.05, cntrl->dx, cntrl->dy);
+			cntrl->points[i] = rotate_z(cntrl->points[i], -0.05, cntrl->dx, \
+				cntrl->dy);
 		if (key == 2)
-			cntrl->points[i] = rotate_z(cntrl->points[i], 0.05, cntrl->dx, cntrl->dy);
+			cntrl->points[i] = rotate_z(cntrl->points[i], 0.05, cntrl->dx, \
+				cntrl->dy);
 		i++;
 	}
 }
