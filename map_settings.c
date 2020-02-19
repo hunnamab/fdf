@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_settings.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:08 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 16:08:02 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:08:07 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	default_settings(c_cntrl *cntrl)
 	cntrl->data = (int *)mlx_get_data_addr(cntrl->img, &cntrl->bpp, \
 		&cntrl->size_line, &cntrl->endian);
 	cntrl->color = MINT;
+	cntrl->end_color = RED;
 	cntrl->angle = 0.523599;
 	cntrl->scale = 20;
 	cntrl->iso = 1;

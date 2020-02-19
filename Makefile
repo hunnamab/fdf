@@ -6,7 +6,7 @@ LIBRARY = libft/libft.a
 HEADER = fdf.h
 SRC = fdf.c get_next_line.c key_mouse_control.c map_changes.c map_read.c \
 		map_settings.c matrix_manipulations.c points_output.c projections.c \
-		menu.c
+		menu.c colors.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

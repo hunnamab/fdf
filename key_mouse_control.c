@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_mouse_control.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:41:49 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 16:28:17 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:26:40 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 void	img_changes(int key, c_cntrl *cntrl)
 {
-	if (key == 18)
-		cntrl->color = MINT;
-	if (key == 19)
-		cntrl->color = MARS;
-	if (key == 20)
-		cntrl->color = INDIGO;
 	if ((key >= 123 && key <= 126) || (key == 0 || key == 2))
 		rotation(cntrl, key);
 	if (key == 24 || key == 27)
@@ -37,7 +31,24 @@ void	img_changes(int key, c_cntrl *cntrl)
 		find_center(cntrl);
 	}
 }
-
+void color_changes(int key, c_cntrl *cntrl)
+{
+	if (key == 18)
+	{
+		cntrl->color = MINT;
+		cntrl->end_color = RED;
+	}
+	if (key == 19)
+	{
+		cntrl->color = MARS;
+		cntrl->end_color = IVORY;
+	}
+	if (key == 20)
+	{
+		cntrl->color = INDIGO;
+		cntrl->end_color = MARS;
+	}
+}
 int		key_control(int key, c_cntrl *cntrl)
 {
 	if (key == 53)
@@ -56,7 +67,8 @@ int		key_control(int key, c_cntrl *cntrl)
 		cntrl->data = (int *)mlx_get_data_addr(cntrl->img, \
 			&cntrl->bpp, &cntrl->size_line, &cntrl->endian);
 		img_changes(key, cntrl);
-		points_output(cntrl->points, cntrl);
+		color_changes(key, cntrl);
+		points_output(cntrl->points, cntrl, 0, 0);
 		mlx_put_image_to_window(cntrl->mlx, cntrl->win, cntrl->img, 0, 0);
 		show_menu(cntrl);
 	}
