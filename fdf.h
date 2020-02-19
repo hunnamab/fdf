@@ -26,6 +26,7 @@ typedef struct      point
     double          y;
     double          z;
 	double			z_cpy;
+	uint32_t		color;
 }                   p_point;
 
 typedef struct  cntrl
@@ -53,7 +54,7 @@ typedef struct  cntrl
 }               c_cntrl;
 
 int		get_next_line(const int fd, char **line);
-p_point *point_arr(int fd, c_cntrl *cntrl);
+p_point *point_arr(int fd, c_cntrl *cntrl, char *filename);
 void    default_settings(c_cntrl *cntrl);
 void    show_menu(c_cntrl *c_cntrl);
 void    make_3d(c_cntrl *cntrl);

@@ -6,7 +6,7 @@
 /*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:08 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/19 17:08:07 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/20 01:05:38 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	make_3d(c_cntrl *cntrl)
 		while (i < q)
 		{
 			cntrl->points[i].x = (d * cntrl->scale);
-			cntrl->points[i].z = ft_atoi(cntrl->arr[i]) * 5;
-			cntrl->points[i].z_cpy = cntrl->points[i].z;
 			cntrl->points[i].y = (j * cntrl->scale);
 			cntrl->points[i] = iso_coor(cntrl->points[i], cntrl->angle, \
 				cntrl->x_pos, cntrl->y_pos);

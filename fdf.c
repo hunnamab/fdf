@@ -6,7 +6,7 @@
 /*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:40:58 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/19 19:26:00 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/19 23:48:19 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error_exit(ERR_OPEN_FILE);
-	cntrl->points = point_arr(fd, cntrl);
+	cntrl->points = point_arr(fd, cntrl, argv[1]);
 	close(fd);
 	default_settings(cntrl);
 	make_3d(cntrl);

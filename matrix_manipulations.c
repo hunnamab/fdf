@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_manipulations.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:14 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 14:42:17 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/19 23:18:45 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
+#include "math.h"
 p_point	change_scale(p_point point, char sign, double dx, double dy)
 {
 	if (sign == '+')
