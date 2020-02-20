@@ -6,12 +6,16 @@
 /*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:40:58 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/20 21:24:12 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 00:46:39 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
+void	cleanup(c_cntrl *cntrl)
+{
+	ft_memdel((void **)&cntrl->points);
+	ft_memdel((void **)&cntrl);
+}
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -29,6 +33,7 @@ int	main(int argc, char **argv)
 		error_exit(ERR_OPEN_FILE);
 	point_arr(fd, cntrl, argv[1]);
 	close(fd);
+	cleanup(cntrl);
 	default_settings(cntrl);
 	make_3d(cntrl);
 	find_center(cntrl);
@@ -37,7 +42,5 @@ int	main(int argc, char **argv)
 	show_menu(cntrl);
 	key_mouse_control(cntrl);
 	mlx_loop(cntrl->mlx);
-	free(&cntrl->points);
-	free(&cntrl);
 	return (0);
 }

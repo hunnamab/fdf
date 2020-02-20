@@ -6,7 +6,7 @@
 /*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 23:03:36 by pmetron           #+#    #+#             */
-/*   Updated: 2020/02/20 21:00:25 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 00:39:23 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,20 @@ uint32_t	hex2int(char *hex)
 	return (val);
 }
 
-void		double_arr_free(char **double_arr)
+char		**double_arr_free(char **double_arr, char *line)
 {
 	int i;
 
 	i = 0;
+	ft_strdel(&line);
 	while (double_arr[i])
 	{
-		ft_strdel(&double_arr[i]);
+		free(double_arr[i]);
 		i++;
 	}
-	ft_memdel((void **)double_arr);
+	free(double_arr);
+	double_arr = NULL;
+	return(double_arr);
 }
 
 void		point_arr_part_two(int fd, c_cntrl *cntrl, int i, int x)
@@ -99,8 +102,8 @@ void		point_arr_part_two(int fd, c_cntrl *cntrl, int i, int x)
 			x = 0;
 		}
 		i = 0;
+		double_arr = double_arr_free(double_arr, line);
 	}
-	double_arr_free(double_arr);
 }
 
 p_point		*point_arr(int fd, c_cntrl *cntrl, char *filename)
@@ -110,9 +113,8 @@ p_point		*point_arr(int fd, c_cntrl *cntrl, char *filename)
 	char	**double_arr;
 
 	i = 0;
-	while ((get_next_line(fd, &line)))
+	while ((get_next_line(fd, &line)) && (double_arr = ft_strsplit(line, ' ')))
 	{
-		double_arr = ft_strsplit(line, ' ');
 		while (double_arr[i])
 		{
 			i++;
@@ -120,8 +122,8 @@ p_point		*point_arr(int fd, c_cntrl *cntrl, char *filename)
 		}
 		cntrl->nmb_or++;
 		i = 0;
+		double_arr = double_arr_free(double_arr, line);
 	}
-	double_arr_free(double_arr);
 	(cntrl->nmb_op % cntrl->nmb_or) != 0 ? error_exit(ERR_MAP_VALID) : 0;
 	cntrl->points = (p_point *)malloc(sizeof(p_point) * cntrl->nmb_op);
 	close(fd);

@@ -6,84 +6,86 @@
 /*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 16:15:35 by pmetron           #+#    #+#             */
-/*   Updated: 2019/09/22 18:18:23 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 00:43:19 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_delimeters(char const *s, char c)
+static size_t	ft_count_words(char const *s, char c)
 {
-	int num;
-	int i;
+	size_t words;
 
-	num = 0;
+	words = 0;
+	while (*s)
+	{
+		while (*s == c)
+			s++;
+		if (*s)
+		{
+			words++;
+			while (*s && *s != c)
+				s++;
+		}
+	}
+	return (words);
+}
+
+static char		*ft_get_word(char *word, char c)
+{
+	char *start;
+
+	start = word;
+	while (*word && *word != c)
+		word++;
+	*word = '\0';
+	return (ft_strdup(start));
+}
+
+static void		ft_free_words(char **words, size_t i)
+{
+	while (i--)
+		ft_strdel(&(words[i]));
+	free(*words);
+}
+
+static char		**ft_get_words(char *s, char c, size_t words_count)
+{
+	char	**words;
+	char	*word;
+	size_t	i;
+
 	i = 0;
-	if (s)
+	if ((words = (char **)ft_memalloc(sizeof(char *) * (words_count + 1))))
 	{
-		while (s[i] != '\0')
+		while (i < words_count)
 		{
-			if (s[i] != c && s[i + 1] == c)
+			while (*s == c)
+				s++;
+			if (*s)
 			{
-				num++;
+				if (!(word = ft_get_word(s, c)))
+				{
+					ft_free_words(words, i);
+					return (NULL);
+				}
+				words[i++] = word;
+				s += (ft_strlen(word) + 1);
 			}
-			if (s[i] != c && s[i + 1] == '\0')
-			{
-				num++;
-			}
-			i++;
 		}
+		words[i] = NULL;
 	}
-	return (num);
-}
-
-static int		ft_strlen_del(int y, char const *s, char c)
-{
-	int j;
-
-	j = 0;
-	if (s)
-	{
-		while (s[y] != c && s[y] != '\0')
-		{
-			y++;
-			j++;
-		}
-	}
-	return (j);
-}
-
-static	char	**ft_free_arr(char **s)
-{
-	ft_memdel((void **)&s);
-	return (s);
+	return (words);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	int		num;
-	int		i;
-	char	**arr;
-	int		j;
+	char	**words;
+	char	*line;
 
-	i = 0;
-	j = 0;
-	if (!s)
+	if (!s || !(line = ft_strdup((char *)s)))
 		return (NULL);
-	while (s[i] == c && s[i] != '\0')
-		i++;
-	num = ft_delimeters(s, c);
-	if (!(arr = ft_memalloc(sizeof(char *) * num + 1)))
-		return (NULL);
-	while (num-- >= 1)
-	{
-		if (!(arr[j] = ft_strnew(ft_strlen_del(i, s, c))))
-			return (ft_free_arr(arr));
-		arr[j++] = ft_strsub(s, i, ft_strlen_del(i, s, c));
-		i = i + ft_strlen_del(i, s, c);
-		while (s[i] == c && s[i])
-			i++;
-	}
-	arr[j] = NULL;
-	return (arr);
+	words = ft_get_words(line, c, ft_count_words(line, c));
+	free(line);
+	return (words);
 }
