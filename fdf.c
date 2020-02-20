@@ -28,12 +28,12 @@ int	main(int argc, char **argv)
 		ft_putstr("Usage: ./fdf <file_name.fdf>\n");
 		exit(EXIT_SUCCESS);
 	}
+	validation(argv[1]);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error_exit(ERR_OPEN_FILE);
 	point_arr(fd, cntrl, argv[1]);
 	close(fd);
-	cleanup(cntrl);
 	default_settings(cntrl);
 	make_3d(cntrl);
 	find_center(cntrl);

@@ -41,15 +41,18 @@ char		*ft_strsub_hex(char const *s, unsigned int start)
 	return (str);
 }
 
-uint32_t	hex2int(char *hex)
+uint32_t	hex2int(char *line, int x)
 {
+	char		*hex;
 	uint32_t	val;
 	uint8_t		byte;
 
 	val = 0;
-	while (*hex)
+	hex = ft_strsub_hex(line, x);
+	x = 0;
+	while (hex[x])
 	{
-		byte = *hex++;
+		byte = hex[x++];
 		if (byte >= '0' && byte <= '9')
 			byte = byte - '0';
 		else if (byte >= 'a' && byte <= 'f')
@@ -58,6 +61,7 @@ uint32_t	hex2int(char *hex)
 			byte = byte - 'A' + 10;
 		val = (val << 4) | (byte & 0xF);
 	}
+	ft_strdel(&hex);
 	return (val);
 }
 
@@ -93,8 +97,7 @@ void		point_arr_part_two(int fd, c_cntrl *cntrl, int i, int x)
 			while (double_arr[i][x] != ',' && double_arr[i][x] != '\0')
 				x++;
 			if (double_arr[i][x + 3] != '\0')
-				cntrl->points[j].color = \
-				hex2int(ft_strsub_hex(double_arr[i], x + 3));
+				cntrl->points[j].color = hex2int(double_arr[i], x + 3);
 			else
 				cntrl->points[j].color = 0;
 			j++;

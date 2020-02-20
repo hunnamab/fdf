@@ -54,6 +54,7 @@ int		key_control(int key, c_cntrl *cntrl)
 	if (key == 53)
 	{
 		mlx_destroy_window(cntrl->mlx, cntrl->win);
+		cleanup(cntrl);
 		exit(EXIT_SUCCESS);
 	}
 	if (key == 18 || key == 19 || key == 20 || key == 123 || key == 126 || \

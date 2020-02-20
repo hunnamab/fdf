@@ -80,5 +80,7 @@ int		get_color(int start, int curr_pos, int distance,\
 int start_color, int end_color);
 int		get_light(int start_color, int end_color, double percentage);
 double	percent(int start, int curr_pos, int distance);
+void	cleanup(c_cntrl *cntrl);
+void	validation(char *filename);
 
 #endif
