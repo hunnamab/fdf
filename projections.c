@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   projections.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:36 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 16:31:05 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:10:32 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ p_point	iso_coor(p_point point, double angle, double x_pos, double y_pos)
 	double buf;
 
 	buf = point.x;
+	point.z = point.z_cpy * 8;
 	point.x = (point.x - point.y) * cos(angle) + x_pos;
 	point.y = (point.y + buf) * sin(angle) - point.z + y_pos;
 	return (point);
@@ -39,7 +40,7 @@ void	parallel_coor(c_cntrl *cntrl)
 		{
 			cntrl->points[i].x = (d * cntrl->scale) + (WID / 3);
 			cntrl->points[i].y = (j * cntrl->scale) + (HEI / 3);
-			cntrl->points[i].z = cntrl->points[i].z_cpy;
+			cntrl->points[i].z = cntrl->points[i].z_cpy * 8;
 			i++;
 			d++;
 		}

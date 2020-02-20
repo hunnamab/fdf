@@ -6,7 +6,7 @@
 /*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:08 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/20 01:05:38 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/20 21:28:35 by pmetron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,33 @@ void	make_3d(c_cntrl *cntrl)
 	}
 }
 
+int		get_scale(c_cntrl *cntrl)
+{
+	int scale;
+
+	scale = 20;
+	while ((((cntrl->nmb_op / cntrl->nmb_or) * scale) > WID) \
+	|| (cntrl->nmb_or * scale) > WID)
+	{
+		scale--;
+	}
+	return(scale);
+}
+
+void	get_z(c_cntrl *cntrl)
+{
+	int i;
+
+	i = 0;
+	while(i < cntrl->nmb_op)
+	{
+		if (cntrl->points[i].z_cpy > cntrl->z_max)
+			cntrl->z_max = cntrl->points[i].z_cpy;
+		if (cntrl->points[i].z_cpy < cntrl->z_min)
+			cntrl->z_min = cntrl->points[i].z_cpy;
+		i++;
+	}
+}
 void	default_settings(c_cntrl *cntrl)
 {
 	cntrl->mlx = mlx_init();
@@ -69,10 +96,11 @@ void	default_settings(c_cntrl *cntrl)
 	cntrl->img = mlx_new_image(cntrl->mlx, WID, HEI);
 	cntrl->data = (int *)mlx_get_data_addr(cntrl->img, &cntrl->bpp, \
 		&cntrl->size_line, &cntrl->endian);
+	get_z(cntrl);
 	cntrl->color = MINT;
 	cntrl->end_color = RED;
 	cntrl->angle = 0.523599;
-	cntrl->scale = 20;
+	cntrl->scale = get_scale(cntrl);
 	cntrl->iso = 1;
 	cntrl->x_pos = WID / 3;
 	cntrl->y_pos = HEI / 3;

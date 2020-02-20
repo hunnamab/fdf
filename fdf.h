@@ -12,8 +12,8 @@
 #include "error.h"
 # define MAX(x,y) x > y ? x : y;
 
-# define WID 1500
-# define HEI 1000
+# define WID 3000
+# define HEI 2000
 
 # define INDIGO 0x4B0082
 # define MARS 0xD54418
@@ -50,7 +50,8 @@ typedef struct  cntrl
 	double      x_pos;
 	double      y_pos;
 	int         scale;
-	char		**arr;
+	int			z_max;
+	int			z_min;
 }               c_cntrl;
 
 int		get_next_line(const int fd, char **line);
@@ -75,7 +76,8 @@ p_point change_scale(p_point point, char sign, double dx, double dy);
 void	error_exit(char *mes);
 int 	choose_color_x(c_cntrl *cntrl, p_point point_f, p_point point_s, int x);
 int 	choose_color_y(c_cntrl *cntrl, p_point point_f, p_point point_s, int y);
-int		get_color(int start, int curr_pos, int distance, int start_color, int end_color);
+int		get_color(int start, int curr_pos, int distance,\
+int start_color, int end_color);
 int		get_light(int start_color, int end_color, double percentage);
 double	percent(int start, int curr_pos, int distance);
 
