@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_settings.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:08 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/20 21:28:35 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:17:19 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	find_center(c_cntrl *cntrl)
+void	find_center(t_cntrl *cntrl)
 {
 	int		oneline_p;
 	double	x;
@@ -35,7 +35,7 @@ void	find_center(c_cntrl *cntrl)
 	cntrl->dy = ((y2 - y) / 2) + y;
 }
 
-void	make_3d(c_cntrl *cntrl)
+void	make_3d(t_cntrl *cntrl)
 {
 	int i;
 	int j;
@@ -62,7 +62,7 @@ void	make_3d(c_cntrl *cntrl)
 	}
 }
 
-int		get_scale(c_cntrl *cntrl)
+int		get_scale(t_cntrl *cntrl)
 {
 	int scale;
 
@@ -72,15 +72,15 @@ int		get_scale(c_cntrl *cntrl)
 	{
 		scale--;
 	}
-	return(scale);
+	return (scale);
 }
 
-void	get_z(c_cntrl *cntrl)
+void	get_z(t_cntrl *cntrl)
 {
 	int i;
 
 	i = 0;
-	while(i < cntrl->nmb_op)
+	while (i < cntrl->nmb_op)
 	{
 		if (cntrl->points[i].z_cpy > cntrl->z_max)
 			cntrl->z_max = cntrl->points[i].z_cpy;
@@ -89,7 +89,8 @@ void	get_z(c_cntrl *cntrl)
 		i++;
 	}
 }
-void	default_settings(c_cntrl *cntrl)
+
+void	default_settings(t_cntrl *cntrl)
 {
 	cntrl->mlx = mlx_init();
 	cntrl->win = mlx_new_window(cntrl->mlx, WID, HEI, "fdfffs");

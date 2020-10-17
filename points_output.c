@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   points_output.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:30 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/19 19:26:00 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:18:36 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	get_x_line(p_point point_f, p_point point_s, int length, c_cntrl *cntrl)
+void	get_x_line(t_point point_f, t_point point_s, int length, t_cntrl *cntrl)
 {
 	int x;
 	int y;
@@ -29,7 +29,7 @@ void	get_x_line(p_point point_f, p_point point_s, int length, c_cntrl *cntrl)
 	{
 		if (y >= 0 && y < HEI && x >= 0 && x < WID)
 			cntrl->data[y * WID + x] = \
-			choose_color_x(cntrl, point_f, point_s, x);
+				choose_color_x(cntrl, point_f, point_s, x);
 		x += (point_s.x - point_f.x) >= 0 ? 1 : -1;
 		d += 2 * length_y;
 		if (d > 0)
@@ -40,7 +40,7 @@ void	get_x_line(p_point point_f, p_point point_s, int length, c_cntrl *cntrl)
 	}
 }
 
-void	get_y_line(p_point point_f, p_point point_s, int length, c_cntrl *cntrl)
+void	get_y_line(t_point point_f, t_point point_s, int length, t_cntrl *cntrl)
 {
 	int x;
 	int y;
@@ -57,7 +57,7 @@ void	get_y_line(p_point point_f, p_point point_s, int length, c_cntrl *cntrl)
 	{
 		if (y >= 0 && y < HEI && x >= 0 && x < WID)
 			cntrl->data[y * WID + x] = \
-			choose_color_y(cntrl, point_f, point_s, y);
+				choose_color_y(cntrl, point_f, point_s, y);
 		y += (point_s.y - point_f.y) >= 0 ? 1 : -1;
 		d += 2 * length_x;
 		if (d > 0)
@@ -68,7 +68,7 @@ void	get_y_line(p_point point_f, p_point point_s, int length, c_cntrl *cntrl)
 	}
 }
 
-void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
+void	get_line_colored(t_cntrl *cntrl, t_point point_f, t_point point_s)
 {
 	int length;
 	int length_x;
@@ -76,10 +76,10 @@ void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
 
 	length_y = abs((int)point_s.y - (int)point_f.y);
 	length_x = abs((int)point_s.x - (int)point_f.x);
-	length = MAX(length_x, length_y);
-	if (length == 0 && (point_f.y >= 0 && point_f.y < HEI && point_f.x >= 0\
-	&& point_f.x < WID) && (point_s.y >= 0 && point_s.y < HEI \
-	&& point_s.x >= 0 && point_s.x < WID))
+	length = length_x > length_y ? length_x : length_y;
+	if (length == 0 && (point_f.y >= 0 && point_f.y < HEI && point_f.x >= 0 \
+			&& point_f.x < WID) && (point_s.y >= 0 && point_s.y < HEI \
+			&& point_s.x >= 0 && point_s.x < WID))
 		cntrl->data[(int)point_f.y * WID + (int)point_f.x] = cntrl->color;
 	if (length_y <= length_x)
 		get_x_line(point_f, point_s, length + 1, cntrl);
@@ -87,7 +87,7 @@ void	get_line_colored(c_cntrl *cntrl, p_point point_f, p_point point_s)
 		get_y_line(point_f, point_s, length + 1, cntrl);
 }
 
-void	norme(p_point *points, c_cntrl *cntrl, int i, int a)
+void	norme(t_point *points, t_cntrl *cntrl, int i, int a)
 {
 	while (i < a - 1)
 	{
@@ -96,7 +96,7 @@ void	norme(p_point *points, c_cntrl *cntrl, int i, int a)
 	}
 }
 
-void	points_output(p_point *points, c_cntrl *cntrl, int i, int j)
+void	points_output(t_point *points, t_cntrl *cntrl, int i, int j)
 {
 	int a;
 	int b;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_manipulations.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:14 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/19 23:18:45 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:17:19 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "math.h"
-p_point	change_scale(p_point point, char sign, double dx, double dy)
+
+t_point	change_scale(t_point point, char sign, double dx, double dy)
 {
 	if (sign == '+')
 	{
@@ -29,7 +29,7 @@ p_point	change_scale(p_point point, char sign, double dx, double dy)
 	return (point);
 }
 
-p_point	rotate_z(p_point point, double gamma, double dx, double dy)
+t_point	rotate_z(t_point point, double gamma, double dx, double dy)
 {
 	double buf;
 
@@ -39,7 +39,7 @@ p_point	rotate_z(p_point point, double gamma, double dx, double dy)
 	return (point);
 }
 
-p_point	rotate_y(p_point point, double beta, double dx)
+t_point	rotate_y(t_point point, double beta, double dx)
 {
 	double buf;
 
@@ -49,7 +49,7 @@ p_point	rotate_y(p_point point, double beta, double dx)
 	return (point);
 }
 
-p_point	rotate_x(p_point point, double alpha, double dy)
+t_point	rotate_x(t_point point, double alpha, double dy)
 {
 	double buf;
 

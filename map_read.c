@@ -3,121 +3,135 @@
 /*                                                        :::      ::::::::   */
 /*   map_read.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/17 14:42:02 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/19 19:39:24 by pmetron          ###   ########.fr       */
+/*   Created: 2020/02/19 23:03:36 by pmetron           #+#    #+#             */
+/*   Updated: 2020/02/21 16:40:31 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-p_point	*get_point_arr(c_cntrl *cntrl)
+char		*ft_strsub_hex(char const *s, unsigned int start)
 {
-	p_point *point_arr;
+	char	*str;
+	size_t	i;
+	size_t	len;
 
-	point_arr = (p_point *)malloc(sizeof(p_point) * cntrl->nmb_op);
-	return (point_arr);
-}
-
-p_point	*get_double_arr(c_cntrl *cntrl, char *buf)
-{
-	char	*buf2;
-	int		i;
-	int		x;
-
-	i = 0;
-	x = 0;
-	cntrl->arr = (char **)malloc(sizeof(char *) * cntrl->nmb_or);
-	while (buf[i])
+	str = NULL;
+	i = start;
+	len = 0;
+	while (s[i])
 	{
-		if (buf[i] == ' ' && buf[i + 1] == ' ')
-			x++;
+		len++;
 		i++;
 	}
-	i = i - x;
-	buf2 = ft_strnew(i);
 	i = 0;
-	x = 0;
-	while (buf[i])
+	if (s)
 	{
-		if (buf[i] == ' ' && buf[i + 1] == ' ')
+		if (!(str = ft_memalloc(len)))
+			return (NULL);
+		while (i < len)
+		{
+			str[i] = s[start];
 			i++;
-		buf2[x] = buf[i];
-		x++;
-		i++;
-	}
-	i = 0;
-	while (buf2[i])
-	{
-		buf2[i] == '\n' ? buf2[i] = ' ' : 0;
-		i++;
-	}
-	cntrl->arr = ft_strsplit(buf2, ' ');
-	ft_strdel(&buf2);
-	return (get_point_arr(cntrl));
-}
-
-void	error_exit(char *mes)
-{
-		printf("%s\n", mes);
-	exit(1);
-}
-
-int		get_points_in_row(char *buf, int i)
-{
-	int points_in_row;
-
-	points_in_row = 0;
-	while (buf[i])
-	{
-		if (buf[i] == '\n')
-		{
-			break;
+			start++;
 		}
-		if (buf[i] != '\n' && buf[i] != ' ' && (buf[i + 1] == ' ' || buf[i + 1] == '\n') && buf[i]!= '-')
-			points_in_row++;
-		i++;
 	}
-	return(points_in_row);
+	return (str);
 }
 
-p_point	*point_arr(int fd, c_cntrl *cntrl)
+uint32_t	hex2int(char *line, int x)
 {
-	char	buf[64000];
+	char		*hex;
+	uint32_t	val;
+	uint8_t		byte;
+
+	val = 0;
+	hex = ft_strsub_hex(line, x);
+	x = 0;
+	while (hex[x])
+	{
+		byte = hex[x++];
+		if (byte >= '0' && byte <= '9')
+			byte = byte - '0';
+		else if (byte >= 'a' && byte <= 'f')
+			byte = byte - 'a' + 10;
+		else if (byte >= 'A' && byte <= 'F')
+			byte = byte - 'A' + 10;
+		val = (val << 4) | (byte & 0xF);
+	}
+	ft_strdel(&hex);
+	return (val);
+}
+
+char		**double_arr_free(char **double_arr, char *line)
+{
+	int i;
+
+	i = 0;
+	ft_strdel(&line);
+	while (double_arr[i])
+	{
+		free(double_arr[i]);
+		i++;
+	}
+	free(double_arr);
+	double_arr = NULL;
+	return (double_arr);
+}
+
+void		point_arr_part_two(int fd, t_cntrl *cntrl, int i, int x)
+{
+	char	*line;
+	char	**double_arr;
+	int		j;
+
+	j = 0;
+	while ((get_next_line(fd, &line)) && (double_arr = ft_strsplit(line, ' ')))
+	{
+		while (double_arr[i])
+		{
+			cntrl->points[j].z = ft_atoi(double_arr[i]) * 8;
+			cntrl->points[j].z_cpy = cntrl->points[j].z / 8;
+			while (double_arr[i][x] != ',' && double_arr[i][x] != '\0')
+				x++;
+			if (double_arr[i][x + 3] != '\0')
+				cntrl->points[j].color = hex2int(double_arr[i], x + 3);
+			else
+				cntrl->points[j].color = 0;
+			j++;
+			i++;
+			x = 0;
+		}
+		i = 0;
+		double_arr = double_arr_free(double_arr, line);
+	}
+}
+
+t_point		*point_arr(int fd, t_cntrl *cntrl, char *filename)
+{
+	char	*line;
 	int		i;
-	int		points_in_row;
+	char	**double_arr;
 
-	points_in_row = 0;
-	if ((i = read(fd, buf, 64000)))
-		buf[i] = '\0';
 	i = 0;
-	while (buf[i])
+	while ((get_next_line(fd, &line)) && (double_arr = ft_strsplit(line, ' ')))
 	{
-		if (buf[i] == '\n')
+		while (double_arr[i])
 		{
-			break;
-		}
-		if (buf[i] != '\n' && buf[i] != ' ' && (buf[i + 1] == ' ' || buf[i + 1] == '\n') && buf[i]!= '-')
-			points_in_row++;
-		i++;
-	}
-	i = 0;
-	while (buf[i])
-	{
-		if (buf[i] != '\n' && buf[i] != ' ' && (buf[i + 1] == ' ' || buf[i + 1] == '\n') && buf[i] != '-')
+			i++;
 			cntrl->nmb_op++;
-		if (buf[i] == '\n' && buf[i + 1] != '\0')
-		{
-			cntrl->nmb_or++;
-			cntrl->nmb_op / cntrl->nmb_or != points_in_row ? error_exit(ERR_MAP_VALID) : 0;
 		}
-		if (!(ft_isascii(buf[i])))
-			error_exit(ERR_OPEN_FILE);
-		i++;
+		cntrl->nmb_or++;
+		i = 0;
+		double_arr = double_arr_free(double_arr, line);
 	}
-	cntrl->nmb_or += 1;
-	if (cntrl->nmb_op % cntrl->nmb_or != 0 || cntrl->nmb_op == 0)
-		error_exit(ERR_MAP_VALID);
-	return ((get_double_arr(cntrl, buf)));
+	cntrl->nmb_op < 1 ? error_exit(ERR_MAP_VALID) : 0;
+	(cntrl->nmb_op % cntrl->nmb_or) != 0 ? error_exit(ERR_MAP_VALID) : 0;
+	cntrl->points = (t_point *)malloc(sizeof(t_point) * cntrl->nmb_op);
+	close(fd);
+	fd = open(filename, O_RDONLY);
+	point_arr_part_two(fd, cntrl, 0, 0);
+	return (0);
 }

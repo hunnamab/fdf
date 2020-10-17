@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   projections.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:36 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/20 21:10:32 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:29:05 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-p_point	iso_coor(p_point point, double angle, double x_pos, double y_pos)
+double	percent(int start, int curr_pos, int distance)
+{
+	double placement;
+
+	placement = curr_pos - start;
+	return ((distance == 0) ? 1.0 : (placement / distance));
+}
+
+t_point	iso_coor(t_point point, double angle, double x_pos, double y_pos)
 {
 	double buf;
 
@@ -23,7 +31,7 @@ p_point	iso_coor(p_point point, double angle, double x_pos, double y_pos)
 	return (point);
 }
 
-void	parallel_coor(c_cntrl *cntrl)
+void	parallel_coor(t_cntrl *cntrl)
 {
 	int i;
 	int j;

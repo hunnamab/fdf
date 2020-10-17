@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 21:24:02 by pmetron           #+#    #+#             */
-/*   Updated: 2020/02/20 21:24:12 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 13:49:57 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	error_exit(char *mes)
 {
-		printf("%s\n", mes);
-	exit(1);
+	ft_putstr(mes);
+	exit(EXIT_SUCCESS);
 }

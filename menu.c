@@ -6,27 +6,27 @@
 /*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:42:22 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/17 14:52:17 by hunnamab         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:17:19 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	color_menu(c_cntrl *cntrl)
+void	color_menu(t_cntrl *cntrl)
 {
 	mlx_string_put(cntrl->mlx, cntrl->win, 20, 250, IVORY, \
 		"Change color:");
 	mlx_string_put(cntrl->mlx, cntrl->win, 30, 270, IVORY, \
 		"[1] - mint");
 	mlx_string_put(cntrl->mlx, cntrl->win, 30, 290, IVORY, \
-		"[2] - brick");
+		"[2] - mars");
 	mlx_string_put(cntrl->mlx, cntrl->win, 30, 310, IVORY, \
 		"[3] - indigo");
 	mlx_string_put(cntrl->mlx, cntrl->win, 20, 340, IVORY, \
 		"Exit [esc]");
 }
 
-void	show_menu(c_cntrl *cntrl)
+void	show_menu(t_cntrl *cntrl)
 {
 	mlx_string_put(cntrl->mlx, cntrl->win, 80, 30, IVORY, \
 		"Control keys");

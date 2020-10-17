@@ -6,7 +6,7 @@
 #    By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/06 17:43:09 by pmetron           #+#    #+#              #
-#    Updated: 2019/11/11 15:23:41 by hunnamab         ###   ########.fr        #
+#    Updated: 2020/02/21 14:45:53 by hunnamab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJ = $(subst .c,.o,$(SRC))
 all: $(NAME)
 
 $(NAME):
-	gcc $(FLAGS) -c $(SRC) $(INCLUDES)
+	gcc $(FLAGS) -c $(SRC) -I $(INCLUDES)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
 

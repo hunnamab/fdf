@@ -3,35 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmetron <pmetron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hunnamab <hunnamab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 14:40:58 by hunnamab          #+#    #+#             */
-/*   Updated: 2020/02/21 00:46:39 by pmetron          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:17:19 by hunnamab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-void	cleanup(c_cntrl *cntrl)
+
+void	cleanup(t_cntrl *cntrl)
 {
 	ft_memdel((void **)&cntrl->points);
 	ft_memdel((void **)&cntrl);
 }
-int	main(int argc, char **argv)
+
+int		main(int argc, char **argv)
 {
 	int		fd;
-	c_cntrl	*cntrl;
+	t_cntrl	*cntrl;
 
-	if (!(cntrl = (c_cntrl *)ft_memalloc(sizeof(c_cntrl))))
+	if (!(cntrl = (t_cntrl *)ft_memalloc(sizeof(t_cntrl))))
 		return (0);
 	if (argc != 2)
-	{
-		ft_putstr("Usage: ./fdf <file_name.fdf>\n");
-		exit(EXIT_SUCCESS);
-	}
+		error_exit(ERR_USAGE);
 	validation(argv[1]);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_exit(ERR_OPEN_FILE);
+		error_exit(ERR_USAGE);
 	point_arr(fd, cntrl, argv[1]);
 	close(fd);
 	default_settings(cntrl);
